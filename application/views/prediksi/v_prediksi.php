@@ -9,8 +9,8 @@
 		<thead class="text-sm">
 			<tr class="text-center">
 				<th>No</th>
-				<th>Kasus</th>
-				<th>yt</th>
+				<th>Komponen dan Golongan Darah</th>
+				<th>Xt</th>
 				<th>s1t</th>
 				<th>s2t</th>
 				<th>s3t</th>
@@ -25,13 +25,15 @@
 		</thead>
 		<tbody>
 			<?php
+
+
 			if ($kasus != NULL) {
 
 				foreach ($kasus as $key) {
 					$jumlah[] = $key->jml;
-					$nama_kasus[] = $key->jenis_kriminal;
+					$nama_kasus[] = $key->komponen_darah . ' ' . $key->golongan_darah;
 					$thn[] = $key->tahun;
-					$ks[] = $key->jenis_kriminal . " " . $key->tahun;
+					$ks[] = $key->komponen_darah . ' ' . $key->golongan_darah  . " " . $key->tahun;
 				}
 
 
@@ -50,11 +52,14 @@
 				$err = array();
 				$abs_err = array();
 				$pe = array();
-				$a = 0.1;
+				$a = 0.2;
 				$m = 1;
 				$sum = 0;
 				$sum_pe = 0;
 				for ($i = 0; $i < $jml_kasus; $i++) {
+					// echo ("<h1>" . $i . "</h1></br>");
+					// for ($i = 0; $i < $jml_kasus; $i++) {
+					// jika ini adalah data awal (index ke 0)
 					if ($i == 0) {
 						$no = $i;
 						$kasus[$i] = $ks[$i];
@@ -76,6 +81,7 @@
 
 						</tr>
 					<?php } else {
+						// data ke 2 dst (index > 0)
 						$kasus[$i] = $ks[$i];
 					?>
 						<tr>
@@ -88,14 +94,20 @@
 							<td><?= number_format($at[$i] = (3 * $s1[$i]) - (3 * $s2[$i]) + $s3[$i], 3) ?></td>
 							<td><?= number_format($bt[$i] = ($a / (2 * (pow(1 - $a, 2)))) * (((6 - (5 * $a)) * $s1[$i]) - ((10 - (8 * $a)) * $s2[$i]) + ((4 - (3 * $a)) * $s3[$i])), 3) ?></td>
 							<td><?= number_format($ct[$i] = ((pow($a, 2)) / pow((1 - $a), 2)) * ($s1[$i] - (2 * $s2[$i]) + $s3[$i]), 3) ?></td>
-							<td><?= number_format($fct[$i] = $at[$i - 1] + ($bt[$i - 1] * $m) + pow((0.5 * $ct[$i - 1] * $m), 2), 3) ?></td>
+							<td><?= round(number_format($fct[$i] = $at[$i] + ($bt[$i] * $m) + pow((0.5 * $ct[$i] * $m), 2), 3)) ?></td>
 							<td><?php
 								echo $err[$i] = number_format($jml[$i] - $fct[$i], 3);
 								$sum += $err[$i];
 								?></td>
 							<td><?= number_format($abs_err[$i] = abs($err[$i]), 3) ?></td>
 							<td><?php
+								$jml[$i] = $jml[$i] == 0 ? 1 : $jml[$i];
+
 								echo $pe[$i] = number_format($abs_err[$i] / $jml[$i] * 100, 0);
+
+								$pe[$i] = str_replace(",", ".", $pe[$i]);
+								$pe[$i] = doubleval($pe[$i]);
+
 								$sum_pe += $pe[$i];
 								?>%</td>
 
@@ -143,7 +155,7 @@ foreach ($kasus as $key => $value) {
 		data: {
 			labels: <?php echo json_encode($data_thn); ?>,
 			datasets: [{
-				label: 'Data Kriminal ',
+				label: 'Data Permintaan Darah ',
 				backgroundColor: 'rgba(56, 86, 255, 0.87)',
 				borderColor: 'rgba(56, 86, 255, 0.87)',
 				fill: false,

@@ -36,10 +36,8 @@
 					<img src="<?= base_url('logo/polri.png') ?>" width="140px">
 				</div>
 				<div class="col-sm-12 text-center">
-					<h3>DATA KRIMINALISASI POLRES PROBALINGGO</h3>
-					<h5>Jl. Panglima SUdirma No.2 Kec. Kraksan</h5>
-					<h5>Kabupaten Probolinggo</h5>
-					<h5>Jawa Timur 67282</h5>
+					<h3>DATA UTD</h3>
+					<h5>Kabupaten Polewali Mandar</h5>
 					<hr>
 					<h5><u>Keseluruhan Data</u></h5>
 
@@ -49,7 +47,7 @@
 						<thead class="text-sm">
 							<tr class="text-center">
 								<th>No</th>
-								<th>Kasus</th>
+								<th>Komponen dan Golongan Darah</th>
 								<th>yt</th>
 								<th>s1t</th>
 								<th>s2t</th>
@@ -69,9 +67,9 @@
 
 								foreach ($kasus as $key) {
 									$jumlah[] = $key->jml;
-									$nama_kasus[] = $key->jenis_kriminal;
+									$nama_kasus[] = $key->komponen_darah . ' ' . $key->golongan_darah;
 									$thn[] = $key->tahun;
-									$ks[] = $key->jenis_kriminal . " " . $key->tahun;
+									$ks[] = $key->komponen_darah . ' ' . $key->golongan_darah . " " . $key->tahun;
 								}
 
 
@@ -135,7 +133,16 @@
 												?></td>
 											<td><?= number_format($abs_err[$i] = abs($err[$i]), 3) ?></td>
 											<td><?php
+												// echo $pe[$i] = number_format($abs_err[$i] / $jml[$i] * 100, 0);
+												// $sum_pe += $pe[$i];
+												// >%</td>
+												$jml[$i] = $jml[$i] == 0 ? 1 : $jml[$i];
+
 												echo $pe[$i] = number_format($abs_err[$i] / $jml[$i] * 100, 0);
+
+												$pe[$i] = str_replace(",", ".", $pe[$i]);
+												$pe[$i] = doubleval($pe[$i]);
+
 												$sum_pe += $pe[$i];
 												?>%</td>
 
@@ -189,7 +196,7 @@
 			data: {
 				labels: <?php echo json_encode($data_thn); ?>,
 				datasets: [{
-					label: 'Data Kriminal ',
+					label: 'Data Permintaan Darah ',
 					backgroundColor: 'rgba(56, 86, 255, 0.87)',
 					borderColor: 'rgba(56, 86, 255, 0.87)',
 					fill: false,

@@ -36,12 +36,10 @@
 					<img src="<?= base_url('logo/polri.png') ?>" width="140px">
 				</div>
 				<div class="col-sm-12 text-center">
-					<h3>DATA KRIMINALISASI POLRES PROBALINGGO</h3>
-					<h5>Jl. Panglima SUdirma No.2 Kec. Kraksan</h5>
-					<h5>Kabupaten Probolinggo</h5>
-					<h5>Jawa Timur 67282</h5>
+					<h3>DATA UTD</h3>
+					<h5>Kabupaten Polewali Mandar</h5>
 					<hr>
-					<h5><u>Kasus <?= $jenis->jenis_kriminal ?></u></h5>
+					<h5><u>Komponen dan Golongan Darah <?= $jenis->komponen_darah . ' ' . $jenis->golongan_darah ?></u></h5>
 
 				</div>
 				<div class="col-sm-12">
@@ -49,7 +47,7 @@
 						<thead class="text-sm">
 							<tr class="text-center">
 								<th>No</th>
-								<th>Kasus</th>
+								<th>Komponen dan Golongan Darah</th>
 								<th>yt</th>
 								<th>s1t</th>
 								<th>s2t</th>
@@ -65,12 +63,15 @@
 						</thead>
 						<tbody>
 							<?php
+							$bulans = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+								'September', 'Oktober', 'November', 'Desember'
+							];
 							if ($kasus != NULL) {
 
 								foreach ($kasus as $key) {
 									$jumlah[] = $key->jml;
-									$nama_kasus[] = $key->jenis_kriminal;
-									$thn[] = $key->tahun;
+									$nama_kasus[] = $key->komponen_darah . ' ' . $key->golongan_darah;
+									$thn[] = $key->tahun . ' ' . $bulans[$key->bulan - 1];
 								}
 
 
@@ -185,7 +186,7 @@
 			data: {
 				labels: <?php echo json_encode($data_thn); ?>,
 				datasets: [{
-					label: 'Data Kriminal ',
+					label: 'Data Permintaan Darah ',
 					backgroundColor: 'rgba(56, 86, 255, 0.87)',
 					borderColor: 'rgba(56, 86, 255, 0.87)',
 					fill: false,
