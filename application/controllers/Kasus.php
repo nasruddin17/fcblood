@@ -15,7 +15,7 @@ class Kasus extends CI_Controller
 	{
 
 		$data = array(
-			'title' 	=> 'Data Darah UTD Polewali Mandar',
+			'title' 	=> 'Data Permintaan Darah Di UTD',
 			'kasus'	=> $this->m_kasus->tampil(),
 			'isi'		=> 'kasus/v_index'
 		);
@@ -30,6 +30,9 @@ class Kasus extends CI_Controller
 		$this->form_validation->set_rules('tahun', 'Tahun', 'required', array(
 			'required' => '%s Harus Diisi !!!'
 		));
+		$this->form_validation->set_rules('bulan', 'Bulan', 'required', array(
+			'required' => '%s Harus Diisi !!!'
+		));
 
 		$this->form_validation->set_rules('jml', 'Jumlah Kasus', 'required', array(
 			'required' => '%s Harus Diisi !!!'
@@ -38,7 +41,7 @@ class Kasus extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = array(
-				'title' => 'Input Data Kasus',
+				'title' => 'Input Data Permintaan',
 				'jenis'	=> $this->m_jenis->tampil(),
 				'isi'	=> 'kasus/v_add'
 			);
@@ -47,6 +50,7 @@ class Kasus extends CI_Controller
 			$data = array(
 				'id_jenis' 	=> $this->input->post('id_jenis'),
 				'tahun' 	=> $this->input->post('tahun'),
+				'bulan' 	=> $this->input->post('bulan'),
 				'jml'		=> $this->input->post('jml'),
 			);
 			$this->m_kasus->add($data);
@@ -61,6 +65,9 @@ class Kasus extends CI_Controller
 			'required' => '%s Harus Diisi !!!'
 		));
 		$this->form_validation->set_rules('tahun', 'Tahun', 'required', array(
+			'required' => '%s Harus Diisi !!!'
+		));
+		$this->form_validation->set_rules('bulan', 'Bulan', 'required', array(
 			'required' => '%s Harus Diisi !!!'
 		));
 
@@ -82,6 +89,7 @@ class Kasus extends CI_Controller
 				'id_kasus' 	=> $id_kasus,
 				'id_jenis' 	=> $this->input->post('id_jenis'),
 				'tahun' 	=> $this->input->post('tahun'),
+				'bulan' 	=> $this->input->post('bulan'),
 				'jml'		=> $this->input->post('jml'),
 			);
 			$this->m_kasus->edit($data);
@@ -104,9 +112,21 @@ class Kasus extends CI_Controller
 		$data = array(
 			'title' 	=> 'Hitung Prediksi',
 			'jenis' => $this->m_jenis->tampil(),
+			'controller' => $this,
 			'isi'		=> 'prediksi/v_index'
 		);
 		$this->load->view('layout/v_wrapper', $data, FALSE);
+	}
+
+	public function cekjenis($id_jenis)
+	{
+		$ok = false;
+
+		// cek data jenis didatabase
+		$rows = $this->m_jenis->countRows($id_jenis);
+		$ok = $rows > 0;
+
+		return $ok;
 	}
 
 	public function prediksi_all()
