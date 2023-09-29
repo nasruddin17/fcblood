@@ -29,11 +29,11 @@
 			echo form_open('kasus/add') ?>
 			<div class="control-group form-group">
               <div class="controls">
-                <label>Jenis Kasus:</label>
+                <label>Komponen & Golongan Darah:</label>
                 <select name="id_jenis" class="form-control">
-					<option value="">--Jenis Kasus--</option>
+					<option value="">--Komponen & Golongan Darah--</option>
 					<?php foreach ($jenis as $key => $value) { ?>
-						<option value="<?= $value->id_jenis ?>"><?= $value->jenis_kriminal ?></option>
+						<option value="<?= $value->id_jenis ?>"><?= $value->komponen_darah . ' ' . $value->golongan_darah ?></option>
 					<?php } ?>					
 				</select>
               </div>
@@ -43,12 +43,31 @@
               <div class="controls">
                 <label>Tahun:</label>
                 <select name="tahun" class="form-control">
-				<option value="">--Tahun--</option>
+				<option value="">--Tahun Permintaan--</option>
 
 					<?php
 					$now=2030;
-					for ($a=2012;$a<=$now;$a++){ ?>
+					for ($a=2019;$a<=$now;$a++){ ?>
 						<option value="<?= $a ?>"><?= $a ?></option>
+					<?php }?>
+				</select>
+              </div>
+            </div>
+
+			<!-- Bulan -->
+			<div class="control-group form-group">
+              <div class="controls">
+                <label>Bulan:</label>
+                <select name="bulan" class="form-control">
+				<option value="">--Bulan Permintaan--</option>
+
+					<?php
+					$bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+						'September', 'Oktober', 'November', 'Desember'
+					];
+					$now=12;
+					for ($a=1;$a<=$now;$a++){ ?>
+						<option value="<?= $a ?>"><?= $bulan[$a-1] ?></option>
 					<?php }?>
 				</select>
               </div>
@@ -57,7 +76,7 @@
 			<div class="control-group form-group">
               <div class="controls">
                 <label>Jumlah:</label>
-                <input type="text" name="jml" class="form-control" placeholder="Jumlah Kasus">
+                <input type="text" name="jml" class="form-control" placeholder="Jumlah Permintaan">
               </div>
             </div>
 

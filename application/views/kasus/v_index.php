@@ -26,13 +26,15 @@ if ($this->session->flashdata('pesan')) {
 		</thead>
 		<tbody>
 			<?php $no=1; foreach ($kasus as $key => $value) { ?>
-			
+			<?php $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+						'September', 'Oktober', 'November', 'Desember'
+					]; ?>
 			<tr>
 				<td><?= $no++; ?></td>
 				<td><?= $value->komponen_darah ?></td>
 				<td><?= $value->golongan_darah ?></td>
 				<td><?= $value->tahun ?></td>
-				<td><?= $value->bulan ?></td>
+				<td><?= $bulan[$value->bulan - 1] ?></td>
 				<td><?= $value->jml ?></td>
 				<td class="text-center" width="100px">
 					<a href="<?= base_url('kasus/edit/'.$value->id_kasus) ?>" class="btn btn-warning btn-sm" ><i class="fa fa-pencil"></i></a>
