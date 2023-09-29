@@ -1,6 +1,7 @@
 <?php
 
-class M_kasus extends CI_Model {
+class M_kasus extends CI_Model
+{
 
 	public function add($data)
 	{
@@ -33,6 +34,7 @@ class M_kasus extends CI_Model {
 		$this->db->join('tbl_jenis', 'tbl_jenis.id_jenis = tbl_kasus.id_jenis', 'left');
 		$this->db->order_by('tbl_kasus.id_jenis', 'asc');
 		$this->db->order_by('tbl_kasus.tahun', 'asc');
+		$this->db->order_by('tbl_kasus.bulan', 'asc');
 		return $this->db->get()->result();
 	}
 
@@ -41,15 +43,16 @@ class M_kasus extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_kasus');
 		$this->db->join('tbl_jenis', 'tbl_jenis.id_jenis = tbl_kasus.id_jenis', 'left');
-		$this->db->order_by('tbl_kasus.tahun', 'asc');
 		$this->db->where('tbl_kasus.id_jenis', $id_jenis);
-		
+		$this->db->order_by('tbl_kasus.id_kasus', 'asc');
+		// $this->db->order_by('tbl_kasus.bulan', 'asc');
+
 		return $this->db->get()->result();
 	}
 
 	public function jml_kasus()
 	{
-		return $this->db->get('tbl_kasus')->num_rows();	
+		return $this->db->get('tbl_kasus')->num_rows();
 	}
 
 	public function jumlah($id_jenis)
@@ -57,15 +60,15 @@ class M_kasus extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_kasus');
 		$this->db->where('id_jenis', $id_jenis);
-		return $this->db->get()->num_rows();		
+		return $this->db->get()->num_rows();
 	}
 
-	
+
 
 	public function edit($data)
 	{
 		$this->db->where('id_kasus', $data['id_kasus']);
-		$this->db->update('tbl_kasus', $data);	
+		$this->db->update('tbl_kasus', $data);
 	}
 
 	public function hapus($data)
@@ -73,7 +76,6 @@ class M_kasus extends CI_Model {
 		$this->db->where('id_kasus', $data['id_kasus']);
 		$this->db->delete('tbl_kasus', $data);
 	}
-
 }
 
 /* End of file ModelName.php */

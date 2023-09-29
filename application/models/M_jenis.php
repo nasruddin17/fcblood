@@ -23,6 +23,14 @@ class M_jenis extends CI_Model
 		$this->db->where('id_jenis', $id_jenis);
 		return $this->db->get()->row();
 	}
+
+	public function countRows($id_jenis)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_kasus');
+		$this->db->where('id_jenis', $id_jenis);
+		return $this->db->count_all_results();
+	}
 }
 
 /* End of file ModelName.php */
