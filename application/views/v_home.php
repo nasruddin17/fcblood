@@ -1,7 +1,7 @@
 
 <div class="col-sm-12 text-center">
 	<h4 class="mt-4 mb-3">Selamat Datang, <?= $this->session->userdata('nama_user') ?></h4>
-	<h2 class="mt-4 mb-3">SISTEM PREDIKSI TINGKAT KRIMINALITAS</h2>
+	<h2 class="mt-4 mb-3">SISTEM PREDIKSI KEBUTUHAN DARAH</h2>
 </div>
 
 <!-- Image Header -->
